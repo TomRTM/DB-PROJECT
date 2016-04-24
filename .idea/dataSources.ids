@@ -10,8 +10,8 @@
       <schema id="2" parent="1" name="public">
         <object-id>2200</object-id>
         <comment>standard public schema</comment>
-        <introspection-state-number>17151</introspection-state-number>
-        <introspection-timestamp>2016-04-22.00:23:35.987</introspection-timestamp>
+        <introspection-state-number>17958</introspection-state-number>
+        <introspection-timestamp>2016-04-24.02:52:52.337</introspection-timestamp>
       </schema>
       <sequence id="3" parent="2" name="comment_comment_id_seq">
         <object-id>44170</object-id>
@@ -35,7 +35,7 @@
       </sequence>
       <table id="8" parent="2" name="comment">
         <object-id>44172</object-id>
-        <state-number>17151</state-number>
+        <state-number>17957</state-number>
       </table>
       <table id="9" parent="2" name="comments">
         <object-id>33695</object-id>
@@ -55,7 +55,7 @@
       </table>
       <table id="13" parent="2" name="post">
         <object-id>44159</object-id>
-        <state-number>17150</state-number>
+        <state-number>17958</state-number>
       </table>
       <table id="14" parent="2" name="profile">
         <object-id>33656</object-id>
@@ -75,7 +75,7 @@
       </table>
       <table id="18" parent="2" name="usertable">
         <object-id>44117</object-id>
-        <state-number>17124</state-number>
+        <state-number>17958</state-number>
       </table>
       <routine id="19" parent="2" name="find_df_userid">
         <object-id>34891</object-id>
@@ -345,13 +345,13 @@ friendid</columns>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
       <column id="70" parent="13" name="post_id">
-        <state-number>17130</state-number>
+        <state-number>17957</state-number>
         <mandatory>1</mandatory>
         <data-type>bigint</data-type>
         <default-expression>nextval(&apos;post_post_id_seq&apos;::regclass)</default-expression>
       </column>
       <column id="71" parent="13" name="user_id">
-        <state-number>15532</state-number>
+        <state-number>17958</state-number>
         <mandatory>1</mandatory>
         <data-type>bigint</data-type>
       </column>
@@ -371,7 +371,7 @@ friendid</columns>
         <data-type>timestamp with time zone</data-type>
       </column>
       <index id="75" parent="13" name="post_pkey">
-        <object-id>47942</object-id>
+        <object-id>49134</object-id>
         <columns>post_id</columns>
         <desc-columns></desc-columns>
         <unique>1</unique>
@@ -472,11 +472,13 @@ friendid</columns>
       </key>
       <foreign-key id="95" parent="15" name="relationship_user_a_fkey">
         <columns>user_a</columns>
+        <ref-key>~.usertable.usertable_pkey</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
       <foreign-key id="96" parent="15" name="relationship_user_b_fkey">
         <columns>user_b</columns>
+        <ref-key>~.usertable.usertable_pkey</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
@@ -503,6 +505,7 @@ friendid</columns>
       </key>
       <foreign-key id="101" parent="16" name="user_session_user_id_fkey">
         <columns>user_id</columns>
+        <ref-key>~.usertable.usertable_pkey</ref-key>
         <cascade-update-rule>restrict</cascade-update-rule>
         <cascade-delete-rule>restrict</cascade-delete-rule>
       </foreign-key>
