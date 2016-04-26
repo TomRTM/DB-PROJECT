@@ -1,21 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5e2f8893-417f-41e5-a7de-eaff5d911f2e" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/dao/DiaryDao.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/models/Diary.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/views/ApplicationController/showpost.ftl.html" afterPath="$PROJECT_DIR$/src/main/java/views/ApplicationController/showdiary.ftl.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.ids" afterPath="$PROJECT_DIR$/.idea/dataSources.ids" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/dataSources.xml" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/conf/Routes.java" afterPath="$PROJECT_DIR$/src/main/java/conf/Routes.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/controllers/ApplicationController.java" afterPath="$PROJECT_DIR$/src/main/java/controllers/ApplicationController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/dao/CommentDao.java" afterPath="$PROJECT_DIR$/src/main/java/dao/CommentDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/views/ApplicationController/news.ftl.html" afterPath="$PROJECT_DIR$/src/main/java/views/ApplicationController/news.ftl.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/views/ApplicationController/post_view.ftl.html" afterPath="$PROJECT_DIR$/src/main/java/views/ApplicationController/post_view.ftl.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/views/ApplicationController/search_result.ftl.html" afterPath="$PROJECT_DIR$/src/main/java/views/ApplicationController/search_result.ftl.html" />
-    </list>
+    <list default="true" id="5e2f8893-417f-41e5-a7de-eaff5d911f2e" name="Default" comment="" />
     <ignored path="Techies.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/out/" />
@@ -160,8 +146,8 @@
       <file leaf-file-name="showdiary.ftl.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/views/ApplicationController/showdiary.ftl.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+            <state relative-caret-position="330">
+              <caret line="22" column="19" selection-start-line="22" selection-start-column="19" selection-end-line="22" selection-end-column="19" />
               <folding>
                 <element signature="n#style#0;n#div#0;n#\simport#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#div#0;n#div#0;n#\simport#0;n#!!top" expanded="true" />
@@ -1294,12 +1280,12 @@
       <workItem from="1461359988564" duration="7884000" />
       <workItem from="1461371845109" duration="14009000" />
       <workItem from="1461450138059" duration="2589000" />
-      <workItem from="1461523869817" duration="22448000" />
+      <workItem from="1461523869817" duration="22599000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="117815000" />
+    <option name="totallyTimeSpent" value="117966000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -1829,8 +1815,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/views/ApplicationController/showdiary.ftl.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="0" selection-start-line="21" selection-start-column="0" selection-end-line="21" selection-end-column="0" />
+        <state relative-caret-position="330">
+          <caret line="22" column="19" selection-start-line="22" selection-start-column="19" selection-end-line="22" selection-end-column="19" />
           <folding>
             <element signature="n#style#0;n#div#0;n#\simport#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#div#0;n#div#0;n#\simport#0;n#!!top" expanded="true" />
