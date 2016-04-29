@@ -9,5 +9,5 @@ buildNumber.properties
 
 .idea/*
 
-src/main/java/assets/.DS_Store
+.DS_Store
 
