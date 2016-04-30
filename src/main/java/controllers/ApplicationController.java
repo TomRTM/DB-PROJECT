@@ -154,23 +154,27 @@ public class ApplicationController {
                            @Param("fullname") String pFullName,
                            @Param("username") String pUsername,
                            Context context) {
-        Session session = context.getSession();
-        EntityManager em = EntityManagerProvider.get();
+        Boolean emailExist = userTableDao.emailExist(pEmail);
+        if (emailExist) {
+            return Results.redirect(Globals.PathRoot);
+        } else {
+            Session session = context.getSession();
+            EntityManager em = EntityManagerProvider.get();
 
-        UserTable user = new UserTable(pUsername, pEmail, pPassword, pFullName);
-        em.persist(user);
+            UserTable user = new UserTable(pUsername, pEmail, pPassword, pFullName);
+            em.persist(user);
 
-        UserTable canLogin = userTableDao.canLogin(pEmail, pPassword);
+            UserTable canLogin = userTableDao.canLogin(pEmail, pPassword);
 
-        if (canLogin != null) {
-            User_session uSession = new User_session(canLogin);
-            em.persist(uSession);
-            context.getSession().put(Globals.CookieSession, uSession.getId());
-            return Results.redirect(Globals.PathMainPage);
-        }
-        else{
-            //return Results.redirect(Globals.PathMainPage);
-            return Results.html();
+            if (canLogin != null) {
+                User_session uSession = new User_session(canLogin);
+                em.persist(uSession);
+                context.getSession().put(Globals.CookieSession, uSession.getId());
+                return Results.redirect(Globals.PathMainPage);
+            } else {
+                //return Results.redirect(Globals.PathMainPage);
+                return Results.html();
+            }
         }
     }
 
@@ -234,7 +238,7 @@ public class ApplicationController {
         if(relation == null) {
             relationshipDao.createNewRelation(actualUser, target);
             mailController.sendMail();
-            return Results.redirect(Globals.PathProfileView + target.getUsername());
+            return Results.redirect(Globals.PathProfileView + target.getId());
         }
         return Results.redirect(Globals.PathError);
     }
