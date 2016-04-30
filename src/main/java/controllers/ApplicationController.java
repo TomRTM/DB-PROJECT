@@ -159,6 +159,7 @@ public class ApplicationController {
             EntityManager em = EntityManagerProvider.get();
 
             UserTable user = new UserTable(pUsername, pEmail, pPassword, pFullName);
+
             em.persist(user);
 
             UserTable canLogin = userTableDao.canLogin(pEmail, pPassword);
@@ -167,10 +168,13 @@ public class ApplicationController {
                 User_session uSession = new User_session(canLogin);
                 em.persist(uSession);
                 context.getSession().put(Globals.CookieSession, uSession.getId());
-                return Results.redirect(Globals.PathMainPage);
+                Profile profile = new Profile(uSession.getUser(), "This guy is lazy he did not wirte anything!"," "," ");
+                em.persist(profile);
+                return Results.redirect(Globals.PathProfile);
             } else {
                 //return Results.redirect(Globals.PathMainPage);
                 return Results.html();
+
             }
         }
     }
