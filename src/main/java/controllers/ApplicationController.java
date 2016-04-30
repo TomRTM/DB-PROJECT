@@ -466,17 +466,26 @@ public class ApplicationController {
         Session session = context.getSession();
         EntityManager em = EntityManagerProvider.get();
         UserTable actualUser = userTableDao.getUserFromSession(context);
-        Profile newProfile= new Profile(actualUser,birthday,gender,hobby);
-        em.persist(newProfile);
 
+        Profile newProfile= new Profile(actualUser,birthday,gender,hobby);
 
         List<UserTable> mutualFriends = relationshipDao.getRelationList(actualUser, RelationType.Friends);
 
-        Profile profile = profileDao.getProfileFromUser(newProfile.getId());
+
+        if(profileDao.getProfileFromProfile(actualUser)!=null) {
+            profileDao.getProfileFromProfile(actualUser).setAuthor(actualUser);
+            profileDao.getProfileFromProfile(actualUser).setBirthday(birthday);
+            profileDao.getProfileFromProfile(actualUser).setGender(gender);
+            profileDao.getProfileFromProfile(actualUser).setHobby(hobby);
+            em.persist(profileDao.getProfileFromProfile(actualUser));
+        }
+        else{
+            em.persist(newProfile);
+        }
 
         html.render("user", actualUser);
         html.render("friends", mutualFriends);
-        html.render("profile",profile);
+        html.render("profile",newProfile);
 
 
         return html;
