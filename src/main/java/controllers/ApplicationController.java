@@ -18,17 +18,13 @@ package controllers;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+import dao.*;
 import models.*;
 import ninja.Result;
 import ninja.Results;
 
 import com.google.inject.Singleton;
 import com.google.inject.persist.Transactional;
-import dao.RelationshipDao;
-import dao.UserTableDao;
-import dao.PostDao;
-import dao.CommentDao;
-import dao.DiaryDao;
 import etc.Globals;
 import etc.PostType;
 import etc.RelationType;
@@ -61,6 +57,7 @@ public class ApplicationController {
     @Inject CommentDao commentDao;
     @Inject DiaryDao diaryDao;
     @Inject MailController mailController;
+    @Inject ProfileDao profileDao;
 
     @FilterWith(LoginFilter.class)
     public Result index(Context context) {
@@ -234,7 +231,7 @@ public class ApplicationController {
         if(relation == null) {
             relationshipDao.createNewRelation(actualUser, target);
             mailController.sendMail();
-            return Results.redirect(Globals.PathProfileView + target.getUsername());
+            return Results.redirect(Globals.PathProfileView + target.getId());
         }
         return Results.redirect(Globals.PathError);
     }
@@ -287,20 +284,20 @@ public class ApplicationController {
 
         return Results.redirect(Globals.PathProfile);
     }
-
+    @Transactional
     @FilterWith(LoginFilter.class)
-    public Result profile_view(@PathParam("profile") Long profile, Context context) {
+    public Result profile_view(@PathParam("userid") Long userid, Context context) {
         // Initial declarations
         Result html = Results.html();
 
        UserTable actualUser = userTableDao.getUserFromSession(context);
-       UserTable targetUser = userTableDao.getUserFromUserid(profile);
+       UserTable targetUser = userTableDao.getUserFromUserid(userid);
         List<UserTable> mutualFriends = relationshipDao.getRelationList(actualUser, RelationType.Friends);
         Relationship relationship = relationshipDao.getRelationByUsername(actualUser, targetUser);
-
+        Profile profile= profileDao.getProfileFromProfile(targetUser);
         boolean disable_add = false;
 
-        if(relationship != null) {
+       if(relationship != null) {
             if (relationship.getRelation_type() == RelationType.Friends.ordinal() || relationship.getRelation_type() == RelationType.Request.ordinal()) {
                 html.render("relation", relationship);
                 disable_add = (relationship.getRelation_type() == RelationType.Request.ordinal()) && Objects.equals(relationship.getUser_a().getId(), actualUser.getId());
@@ -326,6 +323,7 @@ public class ApplicationController {
         html.render("target", targetUser);
         html.render("friends", mutualFriends);
         html.render("disable_add", disable_add);
+        html.render("profile",profile);
 
         return html;
     }
@@ -419,7 +417,7 @@ public class ApplicationController {
         em.persist(newDiary);
         List<UserTable> mutualFriends = relationshipDao.getRelationList(actualUser, RelationType.Friends);
         Diary diary = diaryDao.getDiaryFromSearchResult(newDiary.getId());
-        //System.out.print("TEST, timestamp: " + newPost.getTimestamp());
+
 
 
         html.render("diary", diary);
@@ -447,6 +445,45 @@ public class ApplicationController {
 
         html.render("user", actualUser);
         html.render("friends", mutualFriends);
+
+        return html;
+    }
+
+    @Transactional
+    @FilterWith(LoginFilter.class)
+    public Result profile_create (Context context, @Param("birthday") String birthday, @Param("gender")String gender, @Param("hobby") String hobby) {
+
+        Result html = Results.html();
+
+        Session session = context.getSession();
+        EntityManager em = EntityManagerProvider.get();
+        UserTable actualUser = userTableDao.getUserFromSession(context);
+        Profile newProfile= new Profile(actualUser,birthday,gender,hobby);
+        em.persist(newProfile);
+
+
+        List<UserTable> mutualFriends = relationshipDao.getRelationList(actualUser, RelationType.Friends);
+
+        Profile profile = profileDao.getProfileFromUser(newProfile.getId());
+
+        html.render("user", actualUser);
+        html.render("friends", mutualFriends);
+        html.render("profile",profile);
+
+
+        return html;
+    }
+    public Result self_profile_view(Context context) {
+        // Initial declarations
+        Result html = Results.html();
+
+        UserTable actualUser = userTableDao.getUserFromSession(context);
+        List<UserTable> mutualFriends = relationshipDao.getRelationList(actualUser, RelationType.Friends);
+        Profile profile= profileDao.getProfileFromProfile(actualUser);
+
+        html.render("user", actualUser);
+        html.render("friends", mutualFriends);
+        html.render("profile",profile);
 
         return html;
     }
