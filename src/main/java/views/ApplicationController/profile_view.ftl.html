@@ -3,7 +3,7 @@
 
 <div class="panel panel-primary panel-shadow">
     <div class="panel-body">
-        <img class="img-responsive img-circle center-block" src="/assets/img/general/icon-profile.png" alt="Profile picture">
+        <a href="/profile/view"><img class="img-responsive img-circle center-block" src="/assets/img/general/icon-profile.png" alt="Profile picture"></a>
         <h2 class="text-center">
             ${target.full_name}
         </h2>
@@ -23,14 +23,23 @@
         </nav>
     </div>
 </div>
-
+    <div class="panel panel-primary">
+        <div class="panel-body">
+            <div class="media">
+                <div class="media-body">
+                    <h4>${profile.birthday}</h4>
+                    <h3>${profile.gender}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
 <#if relation.relation_type == 2>
 <#list posts as post>
 <div class="panel panel-primary">
     <div class="panel-body">
         <div class="media">
             <div class="media-left">
-                <a href="#">
+                <a href="/profile">
                     <img class="media-object img-rounded avatar-64" src="/assets/img/general/icon-profile.png">
                 </a>
             </div>
@@ -74,18 +83,7 @@
 </#list>
 </#if>
 
-    <div class="panel panel-primary">
-        <div class="panel-body">
-            <div class="media">
-                <div class="media-body">
-                    <h4>${profile.birthday}</h4>
-                    <h3>${profile.gender}</h3>
 
-
-                </div>
-            </div>
-        </div>
-    </div>
 
 
 </@layout.myLayout>

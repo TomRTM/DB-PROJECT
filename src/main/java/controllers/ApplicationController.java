@@ -58,7 +58,7 @@ public class ApplicationController {
     @Inject DiaryDao diaryDao;
     @Inject MailController mailController;
     @Inject ProfileDao profileDao;
-
+    @Inject DiaryCommentDao diaryComment;
     @FilterWith(LoginFilter.class)
     public Result index(Context context) {
         // Redirect to "news" because filter is OK
@@ -83,15 +83,15 @@ public class ApplicationController {
         List<Post> posts = postDao.getPostsFromUsers(mutualFriends);
         //List<Comment> comments
         List<Comment> comments = commentDao.getCommentsByPosts(posts);
+        List<Diary> diarys = diaryDao.getDiaryFromUsers(mutualFriends);
+        List<DiaryComment> diaryComments=diaryComment.getCommentsByPosts(diarys);
         // HTML Rendering stuff
         html.render("user", actualUser);
         html.render("posts", posts);
         html.render("comments", comments);
         html.render("friends", mutualFriends);
-
-        List<Diary> diarys = diaryDao.getDiaryFromUsers(mutualFriends);
-
         html.render("diarys", diarys);
+        html.render("diarycomments",diaryComments);
         return html;
     }
 
@@ -401,10 +401,10 @@ public class ApplicationController {
         //Relationship relationship = relationshipDao.getRelationByUsername(actualUser, targetUser);
 
         Diary diary = diaryDao.getDiaryFromSearchResult(diary_id);
-
+        List<DiaryComment> diaryComments=diaryComment.getCommentsBydiary(diary);
         html.render("diary", diary);
         html.render("user", actualUser);
-
+        html.render("diarycomments",diaryComments);
         html.render("friends", mutualFriends);
 
         return html;
@@ -425,6 +425,7 @@ public class ApplicationController {
         em.persist(newDiary);
         List<UserTable> mutualFriends = relationshipDao.getRelationList(actualUser, RelationType.Friends);
         Diary diary = diaryDao.getDiaryFromSearchResult(newDiary.getId());
+
 
 
 
@@ -505,5 +506,20 @@ public class ApplicationController {
         return html;
     }
 
+    @Transactional
+    @FilterWith(LoginFilter.class)
+    public Result post_diary_comment (@Param("diary") String Post, @Param("content") String Content, @Param("returnto") String returnto, Context context) {
+        Session session = context.getSession();
+        EntityManager em = EntityManagerProvider.get();
 
+        UserTable user = userTableDao.getUserFromSession(context);
+
+        DiaryComment newComment = new DiaryComment(user, Long.valueOf(Post), Content, new Timestamp(new Date().getTime()));
+        em.persist(newComment);
+
+        if(returnto == null)
+            return Results.redirect(Globals.PathRoot);
+        else
+            return Results.redirect(returnto + "#comment_" + newComment.getId());
+    }
 }
