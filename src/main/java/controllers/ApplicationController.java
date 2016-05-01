@@ -18,6 +18,7 @@ package controllers;
 
 import com.google.inject.Inject;
 import com.google.inject.Provider;
+import com.sun.tools.internal.xjc.reader.xmlschema.bindinfo.BIConversion;
 import dao.*;
 import models.*;
 import ninja.Result;
@@ -303,6 +304,12 @@ public class ApplicationController {
         List<UserTable> mutualFriends = relationshipDao.getRelationList(actualUser, RelationType.Friends);
         Relationship relationship = relationshipDao.getRelationByUsername(actualUser, targetUser);
         Profile profile= profileDao.getProfileFromProfile(targetUser);
+
+        List<Diary> diary = diaryDao.getDiaryFromUsers(targetUser);
+        List<DiaryComment> diaryComments=diaryComment.getCommentsByPosts(diary);
+        html.render("diary", diary);
+
+        html.render("diarycomments",diaryComments);
         boolean disable_add = false;
 
        if(relationship != null) {
@@ -403,8 +410,9 @@ public class ApplicationController {
         Diary diary = diaryDao.getDiaryFromSearchResult(diary_id);
         List<DiaryComment> diaryComments=diaryComment.getCommentsBydiary(diary);
         html.render("diary", diary);
-        html.render("user", actualUser);
+
         html.render("diarycomments",diaryComments);
+        html.render("user", actualUser);
         html.render("friends", mutualFriends);
 
         return html;
